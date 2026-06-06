@@ -1,0 +1,8 @@
+# Keep all text files LF so shell scripts run correctly on Linux.
+* text=auto eol=lf
+
+# Treat archives/binaries as binary (no line-ending conversion).
+*.zip binary
+*.png binary
+*.jpg binary
+*.gz binary
