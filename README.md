@@ -43,6 +43,10 @@ chmod +x install.sh scripts/*.sh ubuntu_orchis_setup.sh
 ./install.sh
 ```
 
+> 기본적으로 **각 단계 실행 전에 `Run '<모듈>'? [Y/n]`** 을 물어봅니다 (Enter = 실행, `n` = 건너뜀).
+> 그래서 처음부터 쭉 가지 않고 원하는 단계만 골라서 진행할 수 있습니다.
+> 묻지 않고 전부 실행하려면 `--yes`.
+
 확인 프롬프트 없이 진행:
 ```bash
 ./install.sh --yes
@@ -77,15 +81,16 @@ bash scripts/30-docker.sh
 | 6 | `35-samba.sh` | Samba 파일 공유 (`~/Share`, 읽기/쓰기, 사용자 인증) — 윈도우용 |
 | 7 | `36-ssh.sh` | OpenSSH 서버 (VS Code Remote-SSH / rsync 접근용) |
 | 8 | `40-gui.sh` | VS Code, Google Chrome(최신), celluloid, timeshift, ubuntu-restricted-extras |
-| 9 | `45-kakaotalk.sh` | Wine + 한글폰트 / `~/Downloads`의 KakaoTalk*.exe 있으면 설치 실행 |
-| 10 | `50-nvidia.sh` | NVIDIA 드라이버 (GPU 감지 시에만) |
-| 11 | `70-claude-code.sh` | Claude Code (공식 네이티브 인스톨러, Node 불필요) |
-| 12 | (git) | git user.name/email 설정 (미설정 + 비-`--yes`일 때만 질문) |
-| 13 | 테마 | `ubuntu_orchis_setup.sh` — Orchis GTK/아이콘/커서/폰트/배경/확장/Plymouth + fish + Firefox |
-| 14 | `60-korean.sh` | 한글 입력(ibus-hangul) + **Noto Sans KR UI 폰트** + 오른쪽 Alt→한/영 |
-| 15 | `80-copyq.sh` | CopyQ 클립보드 매니저 + Super+V 단축키 |
+| 9 | `50-nvidia.sh` | NVIDIA 드라이버 (GPU 감지 시에만) |
+| 10 | `70-claude-code.sh` | Claude Code (공식 네이티브 인스톨러, Node 불필요) |
+| 11 | (git) | git user.name/email 설정 (미설정 + 비-`--yes`일 때만 질문) |
+| 12 | 테마 | `ubuntu_orchis_setup.sh` — Orchis GTK/아이콘/커서/폰트/배경/확장/Plymouth + fish + Firefox |
+| 13 | `60-korean.sh` | 한글 입력(ibus-hangul) + 오른쪽 Alt→한/영 + **한글만 Nanum 폰트** (fontconfig 폴백, 영어 UI 폰트는 그대로 유지) |
+| 14 | `80-copyq.sh` | CopyQ 클립보드 매니저 + Super+V 단축키 |
+| 15 | `90-kakaotalk.sh` | **(맨 마지막)** WineHQ stable + 한글/이모지(Winemoji) 폰트 / `~/Downloads`의 KakaoTalk*.exe 있으면 GUI 설치 |
 
-> 한글 입력/CopyQ를 **테마 이후**에 두는 이유: 테마의 dconf import가 입력소스·단축키를 덮어쓰지 않게 하기 위함.
+> - 한글 입력/CopyQ를 **테마 이후**에 두는 이유: 테마의 dconf import가 입력소스·단축키를 덮어쓰지 않게 하기 위함.
+> - 카카오톡을 **맨 마지막**에 두는 이유: GUI 설치창 클릭이 필요하므로, 자동 단계를 모두 끝낸 뒤 마지막에 진행.
 
 ---
 
@@ -93,7 +98,7 @@ bash scripts/30-docker.sh
 
 | 플래그 | 설명 |
 |---|---|
-| `--yes` | 확인 프롬프트 자동 yes |
+| `--yes` | 단계별 질문 없이 전부 실행 (기본은 단계마다 `[Y/n]` 질문) |
 | `--skip-locale` / `--skip-cli` / `--skip-python` / `--skip-docker` | 해당 단계 제외 |
 | `--skip-dev` | Python + Docker 둘 다 제외 |
 | `--skip-samba` / `--skip-ssh` / `--skip-gui` / `--skip-kakao` | 해당 단계 제외 |

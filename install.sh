@@ -57,8 +57,11 @@ usage() {
 Ubuntu 24.04 setup orchestrator — runs scripts/ modules, then the theme script.
 Run as a normal user (NOT sudo):  ./install.sh
 
+By default you are asked before EACH step ("Run '<module>'? [Y/n]", Enter = yes),
+so you can pick what to run. Use --yes to run everything without prompting.
+
 Options:
-  --yes              Skip confirmation prompts where possible
+  --yes              Run all steps without asking (no per-step prompt)
   --skip-locale      Skip locale setup         (scripts/05-locale.sh)
   --skip-cli         Skip CLI tools            (scripts/10-cli.sh)
   --skip-python      Skip Python toolchain     (scripts/20-python.sh)
@@ -67,7 +70,7 @@ Options:
   --skip-samba       Skip Samba file sharing   (scripts/35-samba.sh)
   --skip-ssh         Skip SSH server           (scripts/36-ssh.sh)
   --skip-gui         Skip GUI apps             (scripts/40-gui.sh)
-  --skip-kakao       Skip KakaoTalk (Wine)     (scripts/45-kakaotalk.sh)
+  --skip-kakao       Skip KakaoTalk (Wine)     (scripts/90-kakaotalk.sh)
   --skip-nvidia      Skip NVIDIA drivers       (scripts/50-nvidia.sh)
   --skip-korean      Skip Korean input         (scripts/60-korean.sh)
   --skip-claude      Skip Claude Code          (scripts/70-claude-code.sh)
@@ -118,11 +121,26 @@ done
 # Make ASSUME_YES visible to the child module scripts.
 export ASSUME_YES
 
+# Ask before running a step (default Yes). With --yes, run everything silently.
+module_confirm() {
+  [[ "$ASSUME_YES" -eq 1 ]] && return 0
+  local ans
+  read -r -p "Run '$1'? [Y/n]: " ans
+  case "$ans" in
+    ""|y|Y|yes|YES|Yes) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 run_module() {
   local name="$1"
   local file="$SCRIPTS_DIR/$name"
   if [[ ! -f "$file" ]]; then
     warn "Module not found, skipped: $file"
+    return 0
+  fi
+  if ! module_confirm "$name"; then
+    warn "Skipped by user: $name"
     return 0
   fi
   log ">>> Module: $name"
@@ -133,6 +151,10 @@ run_theme() {
   local theme_script="$ROOT_DIR/ubuntu_orchis_setup.sh"
   if [[ ! -f "$theme_script" ]]; then
     warn "Theme script not found, skipped: $theme_script"
+    return 0
+  fi
+  if ! module_confirm "ubuntu_orchis_setup.sh (desktop theme)"; then
+    warn "Skipped by user: theme"
     return 0
   fi
   local args=()
@@ -172,7 +194,6 @@ main() {
   if [[ "$SKIP_SAMBA" -eq 0 ]];  then run_module 35-samba.sh;  else warn "Samba skipped.";         fi
   if [[ "$SKIP_SSH" -eq 0 ]];    then run_module 36-ssh.sh;    else warn "SSH server skipped.";    fi
   if [[ "$SKIP_GUI" -eq 0 ]];    then run_module 40-gui.sh;    else warn "GUI apps skipped.";     fi
-  if [[ "$SKIP_KAKAO" -eq 0 ]];  then run_module 45-kakaotalk.sh; else warn "KakaoTalk skipped.";  fi
   if [[ "$SKIP_NVIDIA" -eq 0 ]]; then run_module 50-nvidia.sh; else warn "NVIDIA skipped.";       fi
   if [[ "$SKIP_CLAUDE" -eq 0 ]]; then run_module 70-claude-code.sh; else warn "Claude Code skipped."; fi
 
@@ -184,6 +205,10 @@ main() {
 
   if [[ "$SKIP_KOREAN" -eq 0 ]]; then run_module 60-korean.sh; else warn "Korean input skipped."; fi
   if [[ "$SKIP_COPYQ" -eq 0 ]];  then run_module 80-copyq.sh;  else warn "CopyQ skipped.";        fi
+
+  # KakaoTalk runs LAST: it launches a GUI installer that needs clicking, so do
+  # all the hands-off steps first, then this one interactive step at the end.
+  if [[ "$SKIP_KAKAO" -eq 0 ]];  then run_module 90-kakaotalk.sh; else warn "KakaoTalk skipped.";  fi
 
   log "All done. Log out and back in (or reboot) to apply group/shell/driver/visual changes."
 }
