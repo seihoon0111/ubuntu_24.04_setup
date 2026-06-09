@@ -212,6 +212,11 @@ main() {
     # glyphs (Korean + Japanese kana + CJK Han), so they render instead of tofu.
     apt_install conky-all jq curl playerctl fonts-noto-cjk fonts-noto-cjk-extra
     safe_unzip "$THEME_DIR/conky-config.zip" "$HOME/.config"   # config + autostart
+    # The bundled zip stores files without a Unix exec bit, so the autostart
+    # entry (which runs `sh -c '.../start.sh'`) and Conky's execi weather/music
+    # scripts fail with "permission denied". Restore +x so Conky autostarts.
+    chmod +x "$HOME/.config/conky/Alfirk-MOD/start.sh" \
+             "$HOME/.config/conky/Alfirk-MOD/scripts/"* 2>/dev/null || true
   else
     warn "Conky installation skipped (--skip-conky)."
   fi
