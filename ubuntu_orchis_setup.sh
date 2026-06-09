@@ -172,6 +172,27 @@ main() {
   [[ "$SKIP_ICONS" -eq 0 ]] && gset org.gnome.desktop.interface icon-theme 'Tela-dark'
 
   # ---------------------------------------------------------------------------
+  # Dock (built-in ubuntu-dock): bottom, on all monitors, floating/rounded.
+  # multi-monitor=true also avoids pinning to a single monitor connector, so a
+  # display-layout change does not reset the dock.
+  # ---------------------------------------------------------------------------
+  log "Configuring the dock (bottom, all monitors, rounded)"
+  gset org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+  gset org.gnome.shell.extensions.dash-to-dock multi-monitor true
+  gset org.gnome.shell.extensions.dash-to-dock extend-height false
+
+  # ---------------------------------------------------------------------------
+  # Wallpaper: Orchis ships none, so use the bundled ArtoWave background.
+  # ---------------------------------------------------------------------------
+  if [[ "$SKIP_WALLPAPER" -eq 0 && -f /usr/share/backgrounds/arto-wave/ArtoWave-Material-MultiC.PNG ]]; then
+    log "Setting the desktop wallpaper"
+    wp='file:///usr/share/backgrounds/arto-wave/ArtoWave-Material-MultiC.PNG'
+    gset org.gnome.desktop.background picture-uri "$wp"
+    gset org.gnome.desktop.background picture-uri-dark "$wp"
+    gset org.gnome.desktop.background picture-options 'zoom'
+  fi
+
+  # ---------------------------------------------------------------------------
   # Terminal: fish + oh-my-posh + GNOME Terminal profile + (fonts above).
   # This is the look from the original bundle, kept as-is.
   # ---------------------------------------------------------------------------
