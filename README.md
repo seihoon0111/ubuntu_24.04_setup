@@ -87,7 +87,9 @@ bash scripts/30-docker.sh
 | 12 | 테마 | `ubuntu_orchis_setup.sh` — **공식 Orchis**(GitHub 빌드, shell 테마는 User Themes 확장) + **Tela 아이콘**(GitHub) + 폰트/배경 + 우분투 dock(바텀·양쪽 모니터·둥근, Orchis 스타일) + **터미널**(fish+oh-my-posh+프로파일) + **Conky**(한글/일본어 CJK 폰트) |
 | 13 | `60-korean.sh` | 한글 입력(ibus-hangul) + 오른쪽 Alt→한/영 + **한글만 Nanum 폰트** (fontconfig 폴백, 영어 UI 폰트는 그대로 유지) |
 | 14 | `80-copyq.sh` | CopyQ 클립보드 매니저 + Super+V 단축키 |
-| 15 | `90-kakaotalk.sh` | **(맨 마지막)** WineHQ stable + 한글/이모지(Winemoji) 폰트 / `~/Downloads`의 KakaoTalk*.exe 있으면 GUI 설치 |
+| 15 | `85-xpad.sh` | **Xpad** 포스트잇 메모 (hamonikr 포크, 소스 빌드 → `/usr/local`) |
+| 16 | `86-desktop-shortcuts.sh` | **바탕화면 바로가기** 생성 — 앱 런처(VS Code/Chrome/xpad/파일/터미널) + 폴더(`~/Downloads`, `~/Share`) |
+| 17 | `90-kakaotalk.sh` | **(맨 마지막)** WineHQ stable + 한글/이모지(Winemoji) 폰트 / `~/Downloads`의 KakaoTalk*.exe 있으면 GUI 설치 |
 
 > - 한글 입력/CopyQ를 **테마 이후**에 두는 관례는 유지합니다. (테마는 이제 dconf의 **터미널 섹션만** import하므로 입력소스·단축키를 덮어쓰지 않지만, 순서는 안전상 그대로 둡니다.)
 > - 카카오톡을 **맨 마지막**에 두는 이유: GUI 설치창 클릭이 필요하므로, 자동 단계를 모두 끝낸 뒤 마지막에 진행.
@@ -103,6 +105,7 @@ bash scripts/30-docker.sh
 | `--skip-dev` | Python + Docker 둘 다 제외 |
 | `--skip-samba` / `--skip-ssh` / `--skip-gui` / `--skip-kakao` | 해당 단계 제외 |
 | `--skip-nvidia` / `--skip-korean` / `--skip-claude` / `--skip-copyq` | 해당 단계 제외 |
+| `--skip-xpad` / `--skip-shortcuts` | Xpad / 바탕화면 바로가기 제외 |
 | `--skip-theme` | 테마 스크립트 제외 |
 | `--remove-snap` | Snap/snapd **제거** (기본은 유지) |
 | `--no-fish` | 로그인 셸 fish 변경 **안 함** (기본은 변경) |

@@ -23,6 +23,8 @@ set -Eeuo pipefail
 #   --skip-korean      Skip Korean input         (scripts/60-korean.sh)
 #   --skip-claude      Skip Claude Code          (scripts/70-claude-code.sh)
 #   --skip-copyq       Skip CopyQ clipboard mgr  (scripts/80-copyq.sh)
+#   --skip-xpad        Skip Xpad sticky notes    (scripts/85-xpad.sh)
+#   --skip-shortcuts   Skip desktop shortcuts    (scripts/86-desktop-shortcuts.sh)
 #   --skip-theme       Skip the desktop theme script
 #
 # Theme behavior:
@@ -46,6 +48,8 @@ SKIP_NVIDIA=0
 SKIP_KOREAN=0
 SKIP_CLAUDE=0
 SKIP_COPYQ=0
+SKIP_XPAD=0
+SKIP_SHORTCUTS=0
 SKIP_THEME=0
 # fish as login shell is ON by default; Snap removal is opt-in (--remove-snap),
 # since it would purge the snap Firefox without installing a replacement.
@@ -76,6 +80,8 @@ Options:
   --skip-korean      Skip Korean input         (scripts/60-korean.sh)
   --skip-claude      Skip Claude Code          (scripts/70-claude-code.sh)
   --skip-copyq       Skip CopyQ clipboard mgr  (scripts/80-copyq.sh)
+  --skip-xpad        Skip Xpad sticky notes    (scripts/85-xpad.sh)
+  --skip-shortcuts   Skip desktop shortcuts    (scripts/86-desktop-shortcuts.sh)
   --skip-theme       Skip the desktop theme script
 
 Theme behavior:
@@ -107,6 +113,8 @@ for arg in "$@"; do
     --skip-korean) SKIP_KOREAN=1 ;;
     --skip-claude) SKIP_CLAUDE=1 ;;
     --skip-copyq) SKIP_COPYQ=1 ;;
+    --skip-xpad) SKIP_XPAD=1 ;;
+    --skip-shortcuts) SKIP_SHORTCUTS=1 ;;
     --skip-theme) SKIP_THEME=1 ;;
     --remove-snap) THEME_REMOVE_SNAP=1 ;;
     --no-fish) THEME_SET_FISH=0 ;;
@@ -207,6 +215,8 @@ main() {
 
   if [[ "$SKIP_KOREAN" -eq 0 ]]; then run_module 60-korean.sh; else warn "Korean input skipped."; fi
   if [[ "$SKIP_COPYQ" -eq 0 ]];  then run_module 80-copyq.sh;  else warn "CopyQ skipped.";        fi
+  if [[ "$SKIP_XPAD" -eq 0 ]];      then run_module 85-xpad.sh;              else warn "xpad skipped.";              fi
+  if [[ "$SKIP_SHORTCUTS" -eq 0 ]]; then run_module 86-desktop-shortcuts.sh; else warn "Desktop shortcuts skipped."; fi
 
   # KakaoTalk runs LAST: it launches a GUI installer that needs clicking, so do
   # all the hands-off steps first, then this one interactive step at the end.
