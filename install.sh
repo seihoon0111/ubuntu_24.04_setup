@@ -199,8 +199,9 @@ main() {
 
   setup_git_identity
 
-  # Theme runs before Korean input so the theme's dconf import does not
-  # overwrite the GNOME input-source setting applied by 60-korean.sh.
+  # Korean input runs after the theme by convention. (The theme now imports
+  # only the GNOME Terminal dconf section, so it no longer overwrites the
+  # input-source / keybinding settings — the order is kept for safety.)
   if [[ "$SKIP_THEME" -eq 0 ]]; then run_theme; else warn "Theme skipped."; fi
 
   if [[ "$SKIP_KOREAN" -eq 0 ]]; then run_module 60-korean.sh; else warn "Korean input skipped."; fi

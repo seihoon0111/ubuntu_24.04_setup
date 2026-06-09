@@ -24,7 +24,7 @@
    git clone https://github.com/seihoon0111/ubuntu_24.04_setup.git
    cd ubuntu_24.04_setup
    ```
-2. `theme/` 폴더에 테마 zip들이 들어있는지 확인합니다 (GTK-Themes, icon-themes, cursors-theme, fonts, wallpapers, gnome-extensions, plymouth-theme, ubuntu-desktop-settings, conky/cava/neofetch/fishomp-config 등).
+2. `theme/` 폴더에 번들 zip들이 들어있는지 확인합니다 (`fonts`, `wallpapers`, `conky-config`, `fishomp-config`, `ubuntu-desktop-settings`). GTK 테마(**Orchis**)와 아이콘(**Tela**)은 번들이 아니라 **공식 GitHub 저장소에서 현재 GNOME 버전에 맞춰 빌드**해서 설치합니다.
 3. (선택) 카카오톡을 설치하려면 **공식 사이트**에서 설치 파일을 받아 `~/Downloads`에 둡니다.
    - 공식: <https://www.kakao.com/talk> (kakaocorp.com으로 리다이렉트 — 정상)
    - ⚠️ `pc-kakaocorp.com`, `win-kakaocorp.com` 같은 하이픈 붙은 도메인은 **가짜**입니다.
@@ -84,12 +84,12 @@ bash scripts/30-docker.sh
 | 9 | `50-nvidia.sh` | NVIDIA 드라이버 (GPU 감지 시에만) |
 | 10 | `70-claude-code.sh` | Claude Code (공식 네이티브 인스톨러, Node 불필요) |
 | 11 | (git) | git user.name/email 설정 (미설정 + 비-`--yes`일 때만 질문) |
-| 12 | 테마 | `ubuntu_orchis_setup.sh` — Orchis GTK/아이콘/커서/폰트/배경/확장/Plymouth + fish + Firefox |
+| 12 | 테마 | `ubuntu_orchis_setup.sh` — **공식 Orchis**(GitHub 빌드, shell 테마는 User Themes 확장) + **Tela 아이콘**(GitHub) + 폰트/배경 + 우분투 dock(바텀·양쪽 모니터·둥근, Orchis 스타일) + **터미널**(fish+oh-my-posh+프로파일) + **Conky**(한글/일본어 CJK 폰트) |
 | 13 | `60-korean.sh` | 한글 입력(ibus-hangul) + 오른쪽 Alt→한/영 + **한글만 Nanum 폰트** (fontconfig 폴백, 영어 UI 폰트는 그대로 유지) |
 | 14 | `80-copyq.sh` | CopyQ 클립보드 매니저 + Super+V 단축키 |
 | 15 | `90-kakaotalk.sh` | **(맨 마지막)** WineHQ stable + 한글/이모지(Winemoji) 폰트 / `~/Downloads`의 KakaoTalk*.exe 있으면 GUI 설치 |
 
-> - 한글 입력/CopyQ를 **테마 이후**에 두는 이유: 테마의 dconf import가 입력소스·단축키를 덮어쓰지 않게 하기 위함.
+> - 한글 입력/CopyQ를 **테마 이후**에 두는 관례는 유지합니다. (테마는 이제 dconf의 **터미널 섹션만** import하므로 입력소스·단축키를 덮어쓰지 않지만, 순서는 안전상 그대로 둡니다.)
 > - 카카오톡을 **맨 마지막**에 두는 이유: GUI 설치창 클릭이 필요하므로, 자동 단계를 모두 끝낸 뒤 마지막에 진행.
 
 ---
@@ -137,14 +137,19 @@ bash scripts/30-docker.sh
    # 한글 깨지면: WINEPREFIX=~/.wine-kakao winetricks -q cjkfonts
    ```
 6. **날씨 위젯(Conky)**: OpenWeatherMap 도시/API 키를 수동 설정 — `~/.config/conky/Alfirk-MOD/scripts/weather-v2.0.sh`
+7. **듀얼 모니터 둘째 화면 상단바**(선택): 기본은 주 모니터에만 상단바가 뜹니다. 둘째 모니터에도 원하면 설치된 **Extension Manager**에서 **Multi Monitors Add-On** 을 직접 설치하세요. (dock은 이미 양쪽에 표시됨)
 
 ---
 
 ## 터미널 환경
 
-- **터미널 앱**: GNOME Terminal (테마가 프로파일을 설정하고 독에 고정)
-- **셸**: fish + oh-my-posh 프롬프트 (bash에서 자동 변경)
+- **터미널 앱**: GNOME Terminal — 색/폰트 프로파일("Everforest Dark", FiraCode Nerd Font)을 dconf로 설정 (덤프 전체가 아니라 `org/gnome/terminal` 섹션만 import)
+- **셸**: fish + oh-my-posh 프롬프트 (`--set-fish-shell`/`install.sh` 기본값으로 로그인 셸 변경)
 - 별도 터미널 에뮬레이터는 설치하지 않습니다.
+
+### 테마 스크립트 단독 옵션
+`ubuntu_orchis_setup.sh` 는 `install.sh` 없이 단독으로도 실행됩니다 (`./ubuntu_orchis_setup.sh --set-fish-shell`). 옵션:
+`--skip-conky`, `--skip-icons`, `--skip-wallpaper`, `--set-fish-shell`, `--remove-snap`, `--yes`.
 
 ---
 
@@ -164,6 +169,7 @@ bash scripts/30-docker.sh
 
 - **"Do not run with sudo" 에러**: `sudo` 떼고 일반 사용자로 실행하세요.
 - **권한 거부로 멈춤**: 계정이 sudo 그룹인지 확인 (`groups`에 `sudo` 포함).
-- **테마가 안 보임**: 로그아웃/재로그인 필요. `theme/` 폴더 zip 존재 여부 확인.
+- **상단바·dock이 기본(Orchis 미적용)**: Shell 테마는 **User Themes 확장**이 필요합니다. `gnome-shell-extensions` 설치 후 **로그아웃/재로그인**해야 셸이 인식합니다. 그다음 `gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com` → `gsettings set org.gnome.shell.extensions.user-theme name 'Orchis-Dark'` → 다시 로그아웃/로그인.
+- **Conky가 안 보임**: 로그인 직후 자동시작됩니다(재부팅 권장). 그래도 안 뜨면 `bash ~/.config/conky/Alfirk-MOD/start.sh` 로 수동 실행해 에러를 확인하세요.
 - **특정 모듈만 다시**: `bash scripts/<모듈>.sh` 로 단독 재실행 (대부분 재실행 안전).
 - **gsettings 관련 경고**: GNOME 세션 밖(TTY/SSH)에서 실행하면 입력/폰트/단축키 설정은 건너뜁니다 — GNOME 데스크탑에서 실행하세요.
