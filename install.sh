@@ -25,9 +25,9 @@ set -Eeuo pipefail
 #   --skip-copyq       Skip CopyQ clipboard mgr  (scripts/80-copyq.sh)
 #   --skip-theme       Skip the desktop theme script
 #
-# Theme behavior (both ON by default — pass these to turn OFF):
-#   --no-remove-snap   Do NOT remove Snap / snapd
-#   --no-fish          Do NOT change the login shell to fish
+# Theme behavior:
+#   --remove-snap      Remove Snap / snapd        (default: keep Snap)
+#   --no-fish          Do NOT change login shell  (default: change to fish)
 #   --                 Pass any further raw flags to the theme script
 #   -h, --help         Show this help
 
@@ -47,8 +47,9 @@ SKIP_KOREAN=0
 SKIP_CLAUDE=0
 SKIP_COPYQ=0
 SKIP_THEME=0
-# Theme extras default ON (snap removal + fish as login shell).
-THEME_REMOVE_SNAP=1
+# fish as login shell is ON by default; Snap removal is opt-in (--remove-snap),
+# since it would purge the snap Firefox without installing a replacement.
+THEME_REMOVE_SNAP=0
 THEME_SET_FISH=1
 THEME_ARGS=()
 
@@ -77,9 +78,9 @@ Options:
   --skip-copyq       Skip CopyQ clipboard mgr  (scripts/80-copyq.sh)
   --skip-theme       Skip the desktop theme script
 
-Theme behavior (both ON by default — pass these to turn OFF):
-  --no-remove-snap   Do NOT remove Snap / snapd
-  --no-fish          Do NOT change the login shell to fish
+Theme behavior:
+  --remove-snap      Remove Snap / snapd       (default: keep Snap)
+  --no-fish          Do NOT change login shell (default: change to fish)
   --                 Pass any further raw flags to the theme script
   -h, --help         Show this help
 USAGE
@@ -107,7 +108,7 @@ for arg in "$@"; do
     --skip-claude) SKIP_CLAUDE=1 ;;
     --skip-copyq) SKIP_COPYQ=1 ;;
     --skip-theme) SKIP_THEME=1 ;;
-    --no-remove-snap) THEME_REMOVE_SNAP=0 ;;
+    --remove-snap) THEME_REMOVE_SNAP=1 ;;
     --no-fish) THEME_SET_FISH=0 ;;
     --) passthrough=1 ;;
     -h|--help)

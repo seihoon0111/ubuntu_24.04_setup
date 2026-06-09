@@ -104,11 +104,12 @@ bash scripts/30-docker.sh
 | `--skip-samba` / `--skip-ssh` / `--skip-gui` / `--skip-kakao` | 해당 단계 제외 |
 | `--skip-nvidia` / `--skip-korean` / `--skip-claude` / `--skip-copyq` | 해당 단계 제외 |
 | `--skip-theme` | 테마 스크립트 제외 |
-| `--no-remove-snap` | Snap 제거 **안 함** (기본은 제거) |
+| `--remove-snap` | Snap/snapd **제거** (기본은 유지) |
 | `--no-fish` | 로그인 셸 fish 변경 **안 함** (기본은 변경) |
 | `--` | 이 뒤의 인자는 테마 스크립트로 그대로 전달 |
 
-> **기본 동작**: Snap 제거 + 로그인 셸을 fish로 변경이 **둘 다 켜져 있습니다**. 끄려면 위 `--no-*` 플래그 사용.
+> **기본 동작**: 로그인 셸을 fish로 변경은 **기본 ON**, Snap 제거는 **기본 OFF**(opt-in)입니다.
+> Snap 제거는 snap Firefox를 대체재 없이 지우고 Timeshift와 충돌할 수 있어, 원할 때만 `--remove-snap` 으로 켜세요.
 
 ---
 
