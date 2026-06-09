@@ -108,10 +108,13 @@ main() {
   # Orchis requires: gnome-themes-extra, gtk2-engines-murrine, sassc.
   # gnome-shell-extensions provides the official "User Themes" extension that
   # the GNOME Shell theme needs in order to apply.
+  # gnome-shell-extension-manager (Extension Manager) is installed so you can
+  # add optional extensions yourself (e.g. Multi Monitors Add-On for a top bar
+  # on a second monitor); the script does not install those automatically.
   apt_install \
     git curl wget unzip ca-certificates \
     sassc gnome-themes-extra gtk2-engines-murrine \
-    gnome-shell-extensions gnome-tweaks
+    gnome-shell-extensions gnome-tweaks gnome-shell-extension-manager
 
   # ---------------------------------------------------------------------------
   # GTK + GNOME Shell theme: official Orchis, built for the running GNOME.
