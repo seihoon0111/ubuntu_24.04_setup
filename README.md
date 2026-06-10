@@ -37,38 +37,19 @@
 
 ## 실행
 
+클론한 폴더에서 (sudo 붙이지 않음!):
 ```bash
-# 1) 클론 (이미 했다면 생략)
-git clone https://github.com/seihoon0111/ubuntu_24.04_setup.git
-cd ubuntu_24.04_setup
-
-# 2) 실행 권한 부여 + 실행 (sudo 붙이지 않음!)
 chmod +x install.sh scripts/*.sh ubuntu_orchis_setup.sh
 ./install.sh
 ```
 
-> 기본적으로 **각 단계 실행 전에 `Run '<모듈>'? [Y/n]`** 을 물어봅니다 (Enter = 실행, `n` = 건너뜀).
-> 그래서 처음부터 쭉 가지 않고 원하는 단계만 골라서 진행할 수 있습니다.
-> 묻지 않고 전부 실행하려면 `--yes`.
+> 기본적으로 **각 단계 실행 전에 `Run '<모듈>'? [Y/n]`** 을 물어봐(Enter = 실행, `n` = 건너뜀), 원하는 단계만 골라서 진행할 수 있습니다.
 
-확인 프롬프트 없이 진행:
+자주 쓰는 변형:
 ```bash
-./install.sh --yes
-```
-
-특정 단계만 빼기 (예: Docker 제외):
-```bash
-./install.sh --skip-docker
-```
-
-모듈 하나만 단독 실행:
-```bash
-bash scripts/30-docker.sh
-```
-
-도움말:
-```bash
-./install.sh --help
+./install.sh --yes          # 질문 없이 전부 실행
+./install.sh --skip-docker  # 특정 단계 제외 (전체 플래그는 --help)
+bash scripts/30-docker.sh   # 모듈 하나만 단독 실행
 ```
 
 ---
@@ -96,8 +77,8 @@ bash scripts/30-docker.sh
 
 > 바탕화면 바로가기는 설치 단계가 아니라 **`update.sh`(루트)** 로 따로 관리합니다 — 아래 "바탕화면 바로가기 관리" 참고.
 
-> - 한글 입력/CopyQ를 **테마 이후**에 두는 관례는 유지합니다. (테마는 이제 dconf의 **터미널 섹션만** import하므로 입력소스·단축키를 덮어쓰지 않지만, 순서는 안전상 그대로 둡니다.)
-> - 카카오톡을 **맨 마지막**에 두는 이유: GUI 설치창 클릭이 필요하므로, 자동 단계를 모두 끝낸 뒤 마지막에 진행.
+> - 한글 입력/CopyQ는 **테마 이후**에 실행해 입력소스·단축키 설정이 보존되게 합니다.
+> - 카카오톡은 GUI 설치창 클릭이 필요해 **맨 마지막**에 둡니다.
 
 ---
 
@@ -140,13 +121,8 @@ bash scripts/30-docker.sh
    ssh <사용자>@<데스크탑IP>
    ```
    VS Code: "Remote - SSH" 확장 → `Remote-SSH: Connect to Host`.
-5. **카카오톡 실행** (설치했다면):
-   ```bash
-   WINEPREFIX=~/.wine-kakao wine "~/.wine-kakao/drive_c/Program Files (x86)/Kakao/KakaoTalk/KakaoTalk.exe"
-   # 한글 깨지면: WINEPREFIX=~/.wine-kakao winetricks -q cjkfonts
-   ```
+5. **카카오톡** (설치했다면): 앱 목록에서 실행 — 한글 폰트(cjkfonts)는 설치 시 자동 적용됩니다.
 6. **날씨 위젯(Conky)**: OpenWeatherMap 도시/API 키를 수동 설정 — `~/.config/conky/Alfirk-MOD/scripts/weather-v2.0.sh`
-7. **듀얼 모니터 둘째 화면 상단바**(선택): 기본은 주 모니터에만 상단바가 뜹니다. 둘째 모니터에도 원하면 설치된 **Extension Manager**에서 **Multi Monitors Add-On** 을 직접 설치하세요. (dock은 이미 양쪽에 표시됨)
 
 ---
 
@@ -165,8 +141,7 @@ bash scripts/30-docker.sh
 | **Quick Settings Audio Panel** | 빠른 설정 메뉴에 볼륨 슬라이더 + 미디어 컨트롤 추가 |
 | **RunPika** | 패널에서 CPU 부하를 달리는 캐릭터 애니메이션으로 표시 (RunCat 계열) |
 
-> **Dash to Panel + ArcMenu** 를 쓰면 우분투 기본 dock 대신 통합 패널을 쓰게 되어, 테마 스크립트의 dock 설정(바텀·양쪽·둥근)과는 별개로 동작합니다. (둘 중 한 쪽 스타일을 선택해서 사용)
-> Dash to Panel은 **각 모니터에 패널을 띄우는 옵션**을 자체 제공하므로, 듀얼 모니터에서 Multi Monitors Add-On은 따로 필요 없습니다. (기본 dock/상단바만 쓰면서 둘째 모니터 상단바가 필요할 때만 Multi Monitors Add-On 설치)
+> **Dash to Panel + ArcMenu** 는 우분투 기본 dock 대신 통합 패널을 쓰는 윈도우 스타일이라, 테마의 dock 설정과는 별개로 동작합니다. 각 모니터에 패널을 띄우는 옵션도 자체 제공하므로 듀얼 모니터에서 **Multi Monitors Add-On**은 따로 필요 없습니다(기본 상단바를 쓸 때만 설치).
 
 ---
 
