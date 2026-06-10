@@ -155,13 +155,13 @@ bash scripts/30-docker.sh
 | **Dash to Panel** | 상단바 + dock을 하나의 작업표시줄로 통합 (윈도우 스타일) |
 | **ArcMenu** | 윈도우식 시작 메뉴 (Dash to Panel과 짝으로 사용) |
 | **Date Menu Formatter** | 패널의 날짜·시계 표시 형식 커스텀 (가로 패널에서 특히 유용) |
-| **Multi Monitors Add-On** | 둘째 모니터에도 상단바 표시 (듀얼 모니터용) |
 | **Coverflow Alt-Tab** | Alt-Tab 창 전환을 3D 커버플로우(앨범 넘기기) 스타일로 |
 | **Media Progress** | 미디어 알림(음악 플레이어)에 진행바 추가 |
 | **Quick Settings Audio Panel** | 빠른 설정 메뉴에 볼륨 슬라이더 + 미디어 컨트롤 추가 |
 | **RunPika** | 패널에서 CPU 부하를 달리는 캐릭터 애니메이션으로 표시 (RunCat 계열) |
 
 > **Dash to Panel + ArcMenu** 를 쓰면 우분투 기본 dock 대신 통합 패널을 쓰게 되어, 테마 스크립트의 dock 설정(바텀·양쪽·둥근)과는 별개로 동작합니다. (둘 중 한 쪽 스타일을 선택해서 사용)
+> Dash to Panel은 **각 모니터에 패널을 띄우는 옵션**을 자체 제공하므로, 듀얼 모니터에서 Multi Monitors Add-On은 따로 필요 없습니다. (기본 dock/상단바만 쓰면서 둘째 모니터 상단바가 필요할 때만 Multi Monitors Add-On 설치)
 
 ---
 
