@@ -70,8 +70,23 @@ log "Launching KakaoTalk installer under Wine (complete the on-screen steps)"
 WINEPREFIX="$WINEPREFIX_DIR" LANG=ko_KR.UTF-8 wine "$INSTALLER" \
   || warn "Wine reported an error while running the installer."
 
+# --- Korean fonts inside the prefix (fixes text showing as tofu/boxes) ---
+# The installer often auto-launches KakaoTalk; kill the prefix's Wine processes
+# first, otherwise winetricks' `wineserver -w` step hangs forever waiting for
+# them. Then install cjkfonts (idempotent — skipped if already present).
+log "Stopping any running Wine processes in the KakaoTalk prefix"
+WINEPREFIX="$WINEPREFIX_DIR" wineserver -k 2>/dev/null || true
+if command -v winetricks >/dev/null 2>&1; then
+  log "Installing CJK fonts into the prefix (winetricks cjkfonts) — may take a few minutes"
+  WINEPREFIX="$WINEPREFIX_DIR" winetricks -q cjkfonts \
+    || warn "winetricks cjkfonts failed; re-run manually (see hint below)."
+else
+  warn "winetricks not found; install Korean fonts manually (see hint below)."
+fi
+
 log "KakaoTalk install step finished."
 log "Launch later:  WINEPREFIX=$WINEPREFIX_DIR wine '$WINEPREFIX_DIR/drive_c/Program Files (x86)/Kakao/KakaoTalk/KakaoTalk.exe'"
 log "EMOJI FIX: in KakaoTalk -> Settings -> font, choose 'Winemoji NBG'."
 log "           (if not listed, pick another font, restart KakaoTalk, then search again)"
-log "If Korean text is broken: WINEPREFIX=$WINEPREFIX_DIR winetricks -q cjkfonts"
+log "Korean fonts (cjkfonts) were installed above; if text is still tofu, close"
+log "           KakaoTalk and re-run: WINEPREFIX=$WINEPREFIX_DIR winetricks -q cjkfonts"
