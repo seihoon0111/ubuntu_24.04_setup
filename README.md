@@ -2,6 +2,10 @@
 
 데스크탑(우분투 메인) 새로 설치 후, 개발 환경 + 한글 + Orchis 테마를 한 번에 구성하는 스크립트 모음.
 
+![Ubuntu 24.04 · Orchis 테마 데스크탑](image/ubuntu_24.04_screenshot.png)
+
+<sub>Orchis 테마 · Conky 위젯(한글 날짜·날씨·업타임·음악) · xpad 메모 · 바탕화면 바로가기 · 카카오톡(한글) · Dash to Panel</sub>
+
 `install.sh`가 `scripts/` 안의 모듈들을 순서대로 실행하고, 마지막에 데스크탑 테마 스크립트(`ubuntu_orchis_setup.sh`)를 호출합니다.
 
 저장소: <https://github.com/seihoon0111/ubuntu_24.04_setup>
