@@ -26,5 +26,6 @@ folder: Downloads=$HOME/Downloads
 folder: Share=$HOME/Share
 
 # 커스텀(웹/명령) — 앞의 '#' 을 지우면 활성화
+custom: Setup 터미널 | gnome-terminal --working-directory=$HOME/ubuntu_24.04_setup | utilities-terminal
 # custom: GitHub | xdg-open https://github.com | web-browser
 # custom: 새 메모 | xpad --new-pad | xpad
