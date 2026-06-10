@@ -59,7 +59,7 @@ done
 if [[ -z "$INSTALLER" ]]; then
   warn "No KakaoTalk*.exe found in $HOME/Downloads"
   warn "Download it from the OFFICIAL site only:  https://www.kakao.com/talk"
-  warn "Save it into ~/Downloads, then re-run:  bash scripts/45-kakaotalk.sh"
+  warn "Save it into ~/Downloads, then re-run:  bash scripts/90-kakaotalk.sh"
   warn "Wine + fonts are installed; finishing without launching the installer."
   exit 0
 fi
