@@ -177,25 +177,3 @@ cd ~/ubuntu_24.04_setup
 ./update.sh        # sudo 불필요
 ```
 
----
-
-## 참고: 멀티 머신 구성
-
-- **데스크탑 (이 스크립트 대상)**: ML 학습용. SSH 서버 + rsync + Samba 제공.
-- **노트북1 (윈도우)**: 자료 작업. **Samba**로 데스크탑 `~/Share` 접근.
-- **노트북2 (우분투, 휴머노이드)**: 데스크탑에서 학습한 모델을 **SSH + rsync**로 로컬에 받아 로봇 제어를 **로컬에서** 실행 (네트워크 마운트로 실행하지 않음 — 끊김/지연 방지).
-  ```bash
-  # 노트북2에서 (예시)
-  rsync -avz <사용자>@<데스크탑IP>:~/training/models/ ~/robot/models/
-  ```
-
----
-
-## 문제 해결
-
-- **"Do not run with sudo" 에러**: `sudo` 떼고 일반 사용자로 실행하세요.
-- **권한 거부로 멈춤**: 계정이 sudo 그룹인지 확인 (`groups`에 `sudo` 포함).
-- **상단바·dock이 기본(Orchis 미적용)**: Shell 테마는 **User Themes 확장**이 필요합니다. `gnome-shell-extensions` 설치 후 **로그아웃/재로그인**해야 셸이 인식합니다. 그다음 `gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com` → `gsettings set org.gnome.shell.extensions.user-theme name 'Orchis-Dark'` → 다시 로그아웃/로그인.
-- **Conky가 안 보임**: 로그인 직후 자동시작됩니다(재부팅 권장). 그래도 안 뜨면 `bash ~/.config/conky/Alfirk-MOD/start.sh` 로 수동 실행해 에러를 확인하세요.
-- **특정 모듈만 다시**: `bash scripts/<모듈>.sh` 로 단독 재실행 (대부분 재실행 안전).
-- **gsettings 관련 경고**: GNOME 세션 밖(TTY/SSH)에서 실행하면 입력/폰트/단축키 설정은 건너뜁니다 — GNOME 데스크탑에서 실행하세요.
