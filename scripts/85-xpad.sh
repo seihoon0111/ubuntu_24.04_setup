@@ -13,8 +13,10 @@ if command -v xpad >/dev/null 2>&1; then
   log "xpad already installed; skipping."
 else
   log "Installing xpad build dependencies"
+  # autopoint is a separate package on Ubuntu (not pulled in by gettext); the
+  # xpad autogen step fails with "can't exec autopoint" without it.
   apt_install build-essential autotools-dev automake autoconf libtool \
-    libgtk-3-dev libglib2.0-dev intltool gettext pkg-config git
+    libgtk-3-dev libglib2.0-dev intltool gettext autopoint pkg-config git
 
   log "Cloning and building hamonikr/xpad"
   build_dir="$(mktemp -d)"
