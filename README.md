@@ -145,6 +145,21 @@ bash scripts/30-docker.sh
 
 ---
 
+## 선택: GNOME 확장 (Extension Manager로 수동 설치)
+
+기본 테마/dock 외에 추가로 쓰는 GNOME 확장 목록. 테마 스크립트가 깔아둔 **Extension Manager** 앱에서 검색·설치하고 **로그아웃/로그인**하면 적용됩니다. (GNOME 46 호환 버전이 있는 것만 설치하세요.)
+
+| 확장 | 용도 |
+|---|---|
+| **Multi Monitors Add-On** | 둘째 모니터에도 상단바 표시 (듀얼 모니터용) |
+| **Dash to Panel** | 상단바 + dock을 하나의 작업표시줄로 통합 (윈도우 스타일) |
+| **ArcMenu** | 윈도우식 시작 메뉴 (Dash to Panel과 짝으로 사용) |
+| **RunPika** | 패널에서 CPU 부하를 달리는 캐릭터 애니메이션으로 표시 (RunCat 계열) |
+
+> **Dash to Panel + ArcMenu** 를 쓰면 우분투 기본 dock 대신 통합 패널을 쓰게 되어, 테마 스크립트의 dock 설정(바텀·양쪽·둥근)과는 별개로 동작합니다. (둘 중 한 쪽 스타일을 선택해서 사용)
+
+---
+
 ## 터미널 환경
 
 - **터미널 앱**: GNOME Terminal — 색/폰트 프로파일("Everforest Dark", FiraCode Nerd Font)을 dconf로 설정 (덤프 전체가 아니라 `org/gnome/terminal` 섹션만 import)
